@@ -1,0 +1,119 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Harry Potter and the Philosopher’s Stone",
+      "author": "J. K. Rowling",
+      "publicationDate": "1997-06-26",
+      "ISBN": "978-0747532699"
+    },
+    {
+      "id": 2,
+      "title": "Harry Potter and the Prisoner of Azkaban",
+      "author": "J. K. Rowling",
+      "publicationDate": "1999-07-08",
+      "ISBN": "978-0747542155"
+    },
+    {
+      "id": 3,
+      "title": "Harry Potter and the Chamber of Secrets",
+      "author": "J. K. Rowling",
+      "publicationDate": "1998-07-02",
+      "ISBN": "978-0747538493"
+    },
+    {
+      "id": 4,
+      "title": "Harry Potter and the Goblet of Fire",
+      "author": "J. K. Rowling",
+      "publicationDate": "2000-07-08",
+      "ISBN": "978-0747546245"
+    },
+    {
+      "id": 5,
+      "title": "Harry Potter and the Order of the Phoenix",
+      "author": "J. K. Rowling",
+      "publicationDate": "2003-06-21",
+      "ISBN": "978-0747551003"
+    },
+    {
+      "id": 6,
+      "title": "Harry Potter and the Half-Blood Prince",
+      "author": "J. K. Rowling",
+      "publicationDate": "2005-07-16",
+      "ISBN": "978-0747581086"
+    },
+    {
+      "id": 7,
+      "title": "Harry Potter and the Deathly Hallows",
+      "author": "J. K. Rowling",
+      "publicationDate": "2007-07-21",
+      "ISBN": "978-0545010221"
+    },
+    {
+      "id": 8,
+      "title": "The Compound Effect",
+      "author": "Darren Hardy",
+      "publicationDate": "2010-11-02",
+      "ISBN": "978-1593157242"
+    },
+    {
+      "id": 9,
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "publicationDate": "2018-10-16",
+      "ISBN": "978-0735211292"
+    }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "name": "J. K. Rowling",
+      "books": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "biography": "JK Rowling is a British author and philanthropist."
+    },
+    {
+      "id": 2,
+      "name": "Darren Hardy",
+      "books": [
+        8
+      ],
+      "biography": "Darren Hardy is an American author, keynote speaker, advisor, and former publisher of SUCCESS magazine."
+    },
+    {
+      "id": 3,
+      "name": "James Clear",
+      "books": [
+        9
+      ],
+      "biography": "James Clear is an American writer."
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Mostafa Faghani",
+      "email": "Faghanim@mcmaster.ca",
+      "purchasedBooks": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Amir Taghizade",
+      "email": "Taghizadea@mcmaster.ca",
+      "purchasedBooks": [
+        8
+      ]
+    }
+  ]
+}

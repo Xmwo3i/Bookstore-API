@@ -1,0 +1,652 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Bookstore API",
+    "version": "1.0.0",
+    "description": "API for managing a bookstore with books, authors, and users"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000",
+      "description": "Development server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the book",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the book",
+            "example": "Harry Potter"
+          },
+          "author": {
+            "type": "string",
+            "description": "the author who wrote the book",
+            "example": "J. K. Rowling"
+          },
+          "publicationDate": {
+            "type": "string",
+            "description": "Date of the book was published",
+            "example": "1998-07-02"
+          },
+          "ISBN": {
+            "type": "string",
+            "description": "Number of the book",
+            "example": "978-0747538493"
+          }
+        },
+        "required": [
+          "title",
+          "author",
+          "publicationDate",
+          "ISBN"
+        ]
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the author",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the author",
+            "example": "Darren Hardy"
+          },
+          "books": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "A list of books written by the author"
+          },
+          "biography": {
+            "type": "string",
+            "description": "Short biography of the author",
+            "example": "JK Rowling is a British author and philanthropist."
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the user",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user",
+            "example": "Mostafa Faghani"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the user",
+            "example": "Faghanim@mcmaster.ca"
+          },
+          "purchasedBooks": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "A list of books purchased by the user"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
+      }
+    }
+  },
+  "paths": {
+    "/books": {
+      "post": {
+        "summary": "Add a new book",
+        "description": "Create a new book with title, author, publication date, and ISBN.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the book."
+                  },
+                  "author": {
+                    "type": "string",
+                    "description": "The author of the book."
+                  },
+                  "publicationDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The publication date of the book."
+                  },
+                  "ISBN": {
+                    "type": "string",
+                    "description": "The ISBN number of the book."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all books",
+        "description": "Get a list of all books in the system.",
+        "responses": {
+          "200": {
+            "description": "A list of books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Retrieve a book by ID",
+        "description": "Get detailed information about a specific book.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the book to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a book",
+        "description": "Modify an existing book's information.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the book to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the book."
+                  },
+                  "author": {
+                    "type": "string",
+                    "description": "The author of the book."
+                  },
+                  "publicationDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The publication date of the book."
+                  },
+                  "ISBN": {
+                    "type": "string",
+                    "description": "The ISBN number of the book."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book",
+        "description": "Remove a book from the system.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the book to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book deleted successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        }
+      }
+    },
+    "/authors": {
+      "post": {
+        "summary": "Add a new author",
+        "description": "Create a new author with name, biography, and associated books.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the author."
+                  },
+                  "biography": {
+                    "type": "string",
+                    "description": "A brief biography of the author."
+                  },
+                  "books": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "A list of books written by the author."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Author created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all authors",
+        "description": "Get a list of all authors in the system.",
+        "responses": {
+          "200": {
+            "description": "A list of authors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Author"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors/{id}": {
+      "get": {
+        "summary": "Retrieve an author by ID",
+        "description": "Get a specific author by their unique ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the author to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Author found successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Author not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Author not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an author",
+        "description": "Modify an existing author's information.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the author to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the author."
+                  },
+                  "biography": {
+                    "type": "string",
+                    "description": "A brief biography of the author."
+                  },
+                  "books": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "A list of books written by the author."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Author updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          },
+          "404": {
+            "description": "Author not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an author",
+        "description": "Remove an author from the system.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the author to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Author deleted successfully"
+          },
+          "404": {
+            "description": "Author not found"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Add a new user",
+        "description": "Create a new user with name and email, along with purchased books.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the user."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email of the user."
+                  },
+                  "purchasedBooks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "A list of books purchased by the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all users",
+        "description": "Get a list of all users in the system.",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "summary": "Update a user",
+        "description": "Modify an existing user's information.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the user to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the user."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email of the user."
+                  },
+                  "purchasedBooks": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "A list of books purchased by the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "description": "Remove a user from the system.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "The ID of the user to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

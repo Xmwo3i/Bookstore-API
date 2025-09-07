@@ -728,7 +728,20 @@ app.delete('/users/:id', (req, res) => {
     }
 }); 
 
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: true,
+    message: err.message || "Internal Server Error"
+  });
 });
+
+module.exports = app;
+
+// Only start server if file is run directly
+if (require.main === module) {
+  const PORT = 4000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}

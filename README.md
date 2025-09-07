@@ -102,6 +102,8 @@ Bookstore-API/
 ├─ data.json           # Sample data storage
 ├─ package.json
 └─ README.md
+```
+
 ---
 
 ## Endpoints Overview

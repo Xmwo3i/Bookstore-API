@@ -91,6 +91,7 @@ Tests cover:
 ---
 
 ## Folder Structure
+```
 Bookstore-API/
 ├─ index.js            # Main application
 ├─ routes/             # Routes for books, authors, users
